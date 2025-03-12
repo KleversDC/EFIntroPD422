@@ -9,14 +9,10 @@ namespace EFIntroPD422.Entities
     [Table("Passengers")]
     class Client
     {
-        [Key]
         public int Id { get; set; }
-        [Required, MaxLength(50)]
         //[MaxLength(100)]
-        [Column("FirstName")]
 
         public string Name { get; set; }
-        [EmailAddress, Required]
         public string Email { get; set; }
         public DateTime? Birthdate { get; set; }
         //Navigation property

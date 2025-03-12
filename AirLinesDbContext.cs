@@ -21,7 +21,7 @@ namespace EFIntroPD422
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = SuperAirLinesDB; Integrated Security = True; Connect Timeout = 5; Encrypt = False; Trust Server Certificate = False; Application Intent = ReadWrite; Multi Subnet Failover = False");
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=yroksk;Integrated Security=True;Connect Timeout=6;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,7 +33,11 @@ namespace EFIntroPD422
                 new Client {Id = 2, Name = "Petro", Email = "petro@gmail.com", Birthdate = new DateTime(1992, 10, 10)},
                 new Client {Id = 3, Name = "Vasyl", Email = "vasyl@gmail.com", Birthdate = new DateTime(1995, 5, 5)}
             });
-            
+            modelBuilder.Entity<Airplane>().Property(a => a.Model).IsRequired();
+            modelBuilder.Entity<Client>().HasKey(c => c.Id);
+            modelBuilder.Entity<Client>().Property(C => C.Name).HasMaxLength(50).IsRequired();
+            modelBuilder.Entity<Client>().ToTable("FirstName");
+            modelBuilder.Entity<Flight>().HasOne(f => f.Airplane).WithMany(a => a.Flights).HasForeignKey(f => f.AirplaneId);
         }
 
 
